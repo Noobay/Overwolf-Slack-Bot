@@ -8,30 +8,18 @@ from sys import argv
 import bottle
 from bottle import default_app, request, route, response, get
 
+global urlList
 
 
 @get('/')
 def index():
     response.content_type = 'text/plain; charset=utf-8'
-    ret =  'Hello world, I\'m %s!\n\n' % os.getpid()
-    ret += 'Request vars:\n'
-    for k, v in request.environ.iteritems():
-        if 'bottle.' in k:
-            continue
-        ret += '%s=%s\n' % (k, v)
- 
-    ret += '\n'
-    ret += 'Environment vars:\n'
+    return urlList
 
-    for k, v in env.iteritems():
-        if 'bottle.' in k:
-            continue
-        ret += '%s=%s\n' % (k, v)
-
-    return ret
 def onInit():
     f = open('urllist.txt', 'r')
     urlString = f.read()
     urlList = urllist.split('\n');
     
+onInit()
 bottle.run(host='0.0.0.0', port=argv[1])
