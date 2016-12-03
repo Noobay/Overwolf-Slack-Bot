@@ -28,27 +28,29 @@ def index():
 @route('/docs/', method='POST')
 def docs():
     args = request.body.read()
-    textargs = re.search('(?<=text=).+?(?=&)', args)
-    print textargs.group(0)
 
-    buildsearchurl(textargs.group(0).split('+'))
+    reArgs = re.search('(?<=text=).+?(?=&)', args)
+
+    textArgs = reArgs.group(0)
+
+    buildsearchurl(textArgs.split('+'))
 
     try:
         response = urllib2.urlopen(searchUrl)     
     except HTTPError:
-        return 'your search term: "' + textargs.group(0).replace('+',' ') +  '" was not found in the OverWolf documentations'
+        return 'your search term: "' + textArgs.replace('+',' ') +  '" was not found in OverWolfs documentation'
      
     return response.geturl();
 
-def buildsearchurl(searchargs):
+def buildsearchurl(searchArgs):
     global searchUrl
 
     searchUrl = searchUrlBase
 
-    for counter, argument in enumerate(searchargs):
+    for counter, argument in enumerate(searchArgs):
         print searchUrl
         searchUrl += argument
-        if counter < len(searchargs)-1:
+        if counter < len(searchArgs)-1:
             searchUrl += '-'
 
 bottle.run(host='0.0.0.0', port=argv[1])
