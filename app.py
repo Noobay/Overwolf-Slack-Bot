@@ -13,7 +13,8 @@ import re
 import bottle
 from bottle import default_app, request, route, response, get, post,put
 
-searchUrlBase = 'http://developers.overwolf.com/documentation/search/'
+docsUrl = 'http://developers.overwolf.com/documentation/'
+searchUrlBase = docsUrl + 'search/'
 searchUrl = ''
 
 bottle.debug(True)
@@ -25,11 +26,15 @@ def index():
     return ret
 
 
+@route('/docs/', method='GET')
 @route('/docs/', method='POST')
 def docs():
     args = request.body.read()
 
     reArgs = re.search('(?<=text=).+?(?=&)', args)
+
+    if reArgs is None:
+        return docsUrl
 
     textArgs = reArgs.group(0)
 
