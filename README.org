@@ -1,2 +1,3 @@
-* a simple bottle app to retrieve the text passed to a Slack Slash Command
+* a simple bottle app 
+** used to retrieve the text passed with a Slack Slash Command and return a query from OverWolf's developer documentation
 
