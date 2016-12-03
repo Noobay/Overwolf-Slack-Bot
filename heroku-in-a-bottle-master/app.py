@@ -38,7 +38,7 @@ def docs():
     try:
         response = urllib2.urlopen(searchUrl)     
     except HTTPError:
-        return 'your search term: "' + textArgs.replace('+',' ') +  '" was not found in OverWolfs documentation'
+        return 'your search term: \'' + textArgs.replace('+',' ') +  '\' was not found in OverWolf\'s documentation'
      
     return response.geturl();
 
