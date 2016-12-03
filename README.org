@@ -1,0 +1,2 @@
+* a simple bottle app to retrieve the text passed to a Slack Slash Command
+
