@@ -8,16 +8,14 @@ from sys import argv
 import urllib2
 from urllib2 import HTTPError
 
-import re
-
 import bottle
-from bottle import default_app, request, route, response, get, post,put
+from bottle import default_app, request, route, response, get, post
+
+import re
 
 docsUrl = 'http://developers.overwolf.com/documentation/'
 searchUrlBase = docsUrl + 'search/'
 searchUrl = ''
-
-bottle.debug(True)
 
 @get('/')
 def index():
@@ -26,8 +24,8 @@ def index():
     return ret
 
 
-@route('/docs/', method='GET')
-@route('/docs/', method='POST')
+@get('/docs/')
+@post('/docs/')
 def docs():
     args = request.body.read()
 
