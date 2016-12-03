@@ -31,7 +31,7 @@ def docs():
     textargs = re.search('(?<=text=).+?(?=&)', args)
     print textargs.group(0)
 
-    buildsearchurl(textargs.group(0).split(' '))
+    buildsearchurl(textargs.group(0).split('+'))
 
     try:
         response = urllib2.urlopen(searchUrl)     
