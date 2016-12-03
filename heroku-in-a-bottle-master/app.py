@@ -8,8 +8,10 @@ from sys import argv
 import urllib2
 from urllib2 import HTTPError
 
+import re
+
 import bottle
-from bottle import default_app, request, route, response, get
+from bottle import default_app, request, route, response, get, post,put
 
 searchUrlBase = 'http://developers.overwolf.com/documentation/search/'
 searchUrl = ''
@@ -22,15 +24,19 @@ def index():
     ret = 'Hello'
     return ret
 
-@route('/docs/<args>')
-def docs(args):
 
-    buildsearchurl(args.split(' '))
+@route('/docs/', method='POST')
+def docs():
+    args = request.body.read()
+    textargs = re.search('(?<=text=).+?(?=&)', args)
+    print textargs.group(0)
+
+    buildsearchurl(textargs.group(0).split(' '))
 
     try:
         response = urllib2.urlopen(searchUrl)     
     except HTTPError:
-        return 'your search term: "' + args.replace('%',' ') +  '" was not found in the OverWolf documentations'
+        return 'your search term: "' + textargs.group(0).replace('+',' ') +  '" was not found in the OverWolf documentations'
      
     return response.geturl();
 
